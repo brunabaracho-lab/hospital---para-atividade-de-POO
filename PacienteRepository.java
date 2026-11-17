@@ -1,88 +1,63 @@
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.dao.Dao;
 import java.sql.SQLException;
-import com.j256.ormlite.table.TableUtils;
 import java.util.List;
-import java.util.ArrayList;
 
-public class PacienteRepository
-{
-    private static Database database;
-    private static Dao<Paciente, Integer> dao;
-    private List<Paciente> loadedPacientes;
-    private Paciente loadedPaciente; 
-    
-    public PacienteRepository(Database database) {
-        PacienteRepository.setDatabase(database);
-        loadedPacientes = new ArrayList<Paciente>();
-    }
-    
-    public static void setDatabase(Database database) {
-        PacienteRepository.database = database;
-        try {
-            dao = DaoManager.createDao(database.getConnection(), Paciente.class);
-            TableUtils.createTableIfNotExists(database.getConnection(), Paciente.class);
-        }
-        catch(SQLException e) {
-            System.out.println(e);
-        }            
-    }
-    
-    public Paciente create(Paciente Paciente) {
-        int nrows = 0;
-        try {
-            nrows = dao.create(Paciente);
-            if ( nrows == 0 )
-                throw new SQLException("Error: object not saved");
-            this.loadedPaciente = Paciente;
-            loadedPacientes.add(Paciente);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return Paciente;
-    }    
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.table.TableUtils;
 
-    public void update(Paciente paciente) {
-        try {
-            dao.update(paciente);
-            this.loadedPaciente = paciente;
-            System.out.println("Paciente atualizado com sucesso!");
-        } catch (SQLException e) {
-            System.out.println(e);
+/** Camada de acesso aos dados (DAO/Repository) da entidade Paciente. */
+public class PacienteRepository {
+    private final Database database;
+    private final Dao<Paciente, Integer> dao;
+
+    public PacienteRepository(Database database) throws SQLException {
+        if (database == null) {
+            throw new IllegalArgumentException("A instancia de Database nao pode ser nula.");
         }
+        this.database = database;
+        this.dao = DaoManager.createDao(database.getConnection(), Paciente.class);
+        TableUtils.createTableIfNotExists(database.getConnection(), Paciente.class);
     }
 
-    public void delete(Paciente paciente) {
-        try {
-            dao.delete(paciente);
-            this.loadedPaciente = null;
-            System.out.println("Paciente excluído com sucesso!");
-        } catch (SQLException e) {
-            System.out.println(e);
+    /** Cadastra um paciente e devolve o proprio objeto com o ID gerado. */
+    public Paciente create(Paciente paciente) throws SQLException {
+        if (paciente == null) {
+            throw new IllegalArgumentException("O paciente nao pode ser nulo.");
         }
-    }
-    
-    public Paciente loadFromId(int id) {
-        try {
-            this.loadedPaciente = dao.queryForId(id);
-            if (this.loadedPaciente != null)
-                this.loadedPacientes.add(this.loadedPaciente);
-        } catch (SQLException e) {
-            System.out.println(e);
+        int linhas = dao.create(paciente);
+        if (linhas != 1) {
+            throw new SQLException("O paciente nao foi salvo no banco de dados.");
         }
-        return this.loadedPaciente;
-    }    
-    
-    public List<Paciente> loadAll() {
-        try {
-            this.loadedPacientes =  dao.queryForAll();
-            if (this.loadedPacientes.size() != 0)
-                this.loadedPaciente = this.loadedPacientes.get(0);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return this.loadedPacientes;
+        return paciente;
     }
 
-    // getters and setters ommited...        
+    /** Recupera todos os pacientes cadastrados. */
+    public List<Paciente> loadAll() throws SQLException {
+        return dao.queryForAll();
+    }
+
+    /** Recupera um paciente pelo ID. */
+    public Paciente loadFromId(int id) throws SQLException {
+        return dao.queryForId(id);
+    }
+
+    /** Metodo mantido para permitir a melhoria opcional (Update). */
+    public void update(Paciente paciente) throws SQLException {
+        dao.update(paciente);
+    }
+
+    /** Exclui um paciente pelo objeto e confirma que um registro foi removido. */
+    public void delete(Paciente paciente) throws SQLException {
+        if (paciente == null) {
+            throw new IllegalArgumentException("Selecione um paciente para excluir.");
+        }
+        int linhas = dao.delete(paciente);
+        if (linhas != 1) {
+            throw new SQLException("O paciente nao foi encontrado ou nao pode ser excluido.");
+        }
+    }
+
+    public void close() {
+        database.close();
+    }
 }

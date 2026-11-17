@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720.0" prefWidth="1100.0"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="PacienteController"
+            style="-fx-background-color: #f4f7fb;">
+    <top>
+        <VBox spacing="14.0" style="-fx-background-color: white;">
+            <padding>
+                <Insets top="22.0" right="26.0" bottom="20.0" left="26.0" />
+            </padding>
+            <VBox spacing="4.0">
+                <Label text="Cadastro de pacientes"
+                       style="-fx-font-size: 23px; -fx-font-weight: bold; -fx-text-fill: #183153;" />
+                <Label text="Informe os dados do paciente para realizar o cadastro."
+                       style="-fx-font-size: 12px; -fx-text-fill: #66758a;" />
+            </VBox>
+            <GridPane hgap="14.0" vgap="10.0">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="34.0" />
+                    <ColumnConstraints percentWidth="22.0" />
+                    <ColumnConstraints percentWidth="18.0" />
+                    <ColumnConstraints percentWidth="26.0" />
+                </columnConstraints>
+
+                <Label text="Nome completo" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #34445b;" />
+                <Label text="CPF" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #34445b;" />
+                <Label text="Data de nascimento" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #34445b;" />
+                <Label text="Idade (informada manualmente)" GridPane.columnIndex="3" GridPane.rowIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #34445b;" />
+
+                <TextField fx:id="nomeField" promptText="Nome do paciente"
+                           GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="cpfField" promptText="CPF"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <DatePicker fx:id="birthdayPicker" promptText="dd/mm/aaaa"
+                            maxWidth="Infinity" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <TextField fx:id="idadeField" promptText="Ex.: 35"
+                           GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                <Label text="Sexo" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                       style="-fx-font-weight: bold; -fx-text-fill: #34445b;" />
+                <Label text="Endereço" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                       GridPane.columnSpan="3"
+                       style="-fx-font-weight: bold; -fx-text-fill: #34445b;" />
+                <ComboBox fx:id="sexoComboBox" promptText="Selecione"
+                          maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <TextField fx:id="enderecoField" promptText="Rua, número, bairro e cidade"
+                           GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3" />
+            </GridPane>
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                <Button text="Limpar formulário" onAction="#handleLimpar"
+                        style="-fx-background-color: #e8edf4; -fx-text-fill: #34445b; -fx-font-weight: bold;"
+                        prefHeight="34.0" />
+                <Button text="Cadastrar paciente" onAction="#handleCadastrar"
+                        style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-weight: bold;"
+                        prefHeight="34.0" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="12.0">
+            <padding>
+                <Insets top="20.0" right="26.0" bottom="24.0" left="26.0" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                    <Label text="Pacientes cadastrados"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #183153;" />
+                    <Label text="Registros consultados no banco de dados SQLite."
+                           style="-fx-font-size: 12px; -fx-text-fill: #66758a;" />
+                </VBox>
+                <Button fx:id="excluirButton" text="Excluir selecionado" onAction="#handleExcluir"
+                        disable="true"
+                        style="-fx-background-color: #fff1f0; -fx-border-color: #f2b8b5; -fx-text-fill: #b42318; -fx-font-weight: bold;"
+                        prefHeight="32.0" />
+                <Button text="Recarregar lista" onAction="#handleAtualizar"
+                        style="-fx-background-color: white; -fx-border-color: #cbd5e1; -fx-text-fill: #34445b;"
+                        prefHeight="32.0" />
+            </HBox>
+            <TableView fx:id="pacientesTable" VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white;">
+                <placeholder>
+                    <Label text="Nenhum paciente cadastrado." />
+                </placeholder>
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="55.0" />
+                    <TableColumn fx:id="nomeColumn" text="Nome" prefWidth="175.0" />
+                    <TableColumn fx:id="cpfColumn" text="CPF" prefWidth="125.0" />
+                    <TableColumn fx:id="birthdayColumn" text="Data de nascimento" prefWidth="110.0" />
+                    <TableColumn fx:id="idadeColumn" text="Idade" prefWidth="65.0" />
+                    <TableColumn fx:id="sexoColumn" text="Sexo" prefWidth="115.0" />
+                    <TableColumn fx:id="enderecoColumn" text="Endereço" prefWidth="260.0" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

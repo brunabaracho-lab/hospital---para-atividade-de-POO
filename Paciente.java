@@ -1,97 +1,112 @@
-import java.util.Date;
 import java.text.SimpleDateFormat;
-import com.j256.ormlite.table.DatabaseTable;
-import com.j256.ormlite.field.DatabaseField;
+import java.util.Date;
+
 import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Representa um paciente armazenado no banco de dados do hospital.
+ * O campo id e gerado pelo banco; a idade e informada manualmente.
+ */
 @DatabaseTable(tableName = "Paciente")
-public class Paciente
-{   
-    @DatabaseField(generatedId = true)
+public class Paciente {
+
+    @DatabaseField(generatedId = true, columnName = "id")
+    private int id;
+
+    @DatabaseField(columnName = "idade")
     private int idade;
-    
-    @DatabaseField
+
+    @DatabaseField(columnName = "nome")
     private String nome;
-    
-    @DatabaseField
-    public String CPF;
-    
-    @DatabaseField(dataType=DataType.DATE)
-    public Date birthday;  
-    
-    @DatabaseField
-    public String endereco;
-    
-    @DatabaseField
-    public String sexo;
-    
-    
-    
-    public String printBirthday() {
-        SimpleDateFormat dateFor = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFor.format(birthday);
+
+    @DatabaseField(columnName = "CPF")
+    private String cpf;
+
+    @DatabaseField(dataType = DataType.DATE, columnName = "birthday")
+    private Date birthday;
+
+    @DatabaseField(columnName = "endereco")
+    private String endereco;
+
+    @DatabaseField(columnName = "sexo")
+    private String sexo;
+
+    /** Construtor vazio exigido pelo ORMLite. */
+    public Paciente() {
     }
 
-//Start GetterSetterExtension Source Code
-
-    /**GET Method Propertie id*/
-    public int getidade(){
-        return this.idade;
-    }//end method getId
-
-    /**SET Method Propertie id*/
-    public void setId(int id){
-        this.idade = id;
-    }//end method setId
-
-    /**GET Method Propertie fullName*/
-    public String getnome(){
-        return this.nome;
-    }//end method getFullName
-
-    /**SET Method Propertie fullName*/
-    public void setnome(String nome){
+    public Paciente(String nome, String cpf, Date birthday, int idade,
+                    String sexo, String endereco) {
         this.nome = nome;
-    }//end method setFullName
-
-    /**GET Method Propertie registration*/
-    public String getCPF(){
-        return this.CPF;
-    }//end method getRegistration
-
-    /**SET Method Propertie registration*/
-    public void setCPF(String CPF){
-        this.CPF = CPF;
-    }//end method setRegistration
-
-    /**GET Method Propertie birthday*/
-    public Date getBirthday(){
-        return this.birthday;
-    }//end method getBirthday
-
-    /**SET Method Propertie birthday*/
-    public void setBirthday(Date birthday){
+        this.cpf = cpf;
         this.birthday = birthday;
-    }//end method setBirthday
-    
-    
-    public void setendereco(String endereco){
-        this.endereco=endereco;
-    }
-    
-    public String getendereco(){
-        return this.endereco;
-    }
-    
-    public void setsexo(String sexo){
-        this.sexo=sexo;
-        
-    }
-    public String getsexo(){
-        return this.sexo;
+        this.idade = idade;
+        this.sexo = sexo;
+        this.endereco = endereco;
     }
 
-//End GetterSetterExtension Source Code
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-}//End class
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String printBirthday() {
+        if (birthday == null) {
+            return "";
+        }
+        return new SimpleDateFormat("dd/MM/yyyy").format(birthday);
+    }
+}

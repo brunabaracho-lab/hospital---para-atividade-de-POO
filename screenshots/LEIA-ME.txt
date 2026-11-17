@@ -1,0 +1,7 @@
+Adicione aqui capturas de tela reais da aplicação em execução no BlueJ.
+
+Sugestões:
+- tela-principal.png: formulário e tabela em português;
+- paciente-cadastrado.png: tabela após cadastrar um paciente.
+
+As capturas devem mostrar a aplicação realmente executada. Não utilize imagens ilustrativas como comprovação de funcionamento.

@@ -1,0 +1,13 @@
+# Arquivos compilados pelo Java/BlueJ
+*.class
+
+# Arquivos temporarios do sistema
+.DS_Store
+Thumbs.db
+
+# Backups locais do banco (mantenha hospital.db se for parte da entrega)
+*.db-journal
+*.db-wal
+*.db-shm
+# Banco de dados local
+hospital.db
