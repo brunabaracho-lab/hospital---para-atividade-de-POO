@@ -4,8 +4,6 @@
 
 Aplicação de computador para cadastrar pacientes e consultar os registros armazenados em um banco de dados SQLite. A interface é desenvolvida em JavaFX e pode ser editada visualmente no Scene Builder. O projeto utiliza ORMLite para a persistência dos dados e separa as responsabilidades seguindo a organização MVC (Model, View e Controller).
 
-**Toda a interface apresentada ao usuário está em português brasileiro.** Os nomes técnicos das bibliotecas e alguns identificadores do código permanecem em sua forma convencional para manter a compatibilidade com JavaFX, ORMLite e o banco de dados.
-
 ## Entidade escolhida: Paciente
 
 A entidade `Paciente` possui os seguintes atributos:
@@ -28,7 +26,7 @@ A entidade `Paciente` possui os seguintes atributos:
 - Recarregamento da lista de pacientes;
 - **Exclusão (Delete — bônus):** remove do banco o paciente selecionado, após uma confirmação do usuário. O botão fica desabilitado enquanto nenhum paciente estiver selecionado.
 
-A atividade exige obrigatoriamente Create e Retrieve. A exclusão foi acrescentada como melhoria opcional (bônus); a atualização (Update) não foi implementada.
+A atividade exige obrigatoriamente Create e Retrieve. A exclusão foi acrescentada como melhoria ; a atualização (Update) não foi implementada.
 
 ## Organização do projeto
 
@@ -50,56 +48,35 @@ A atividade exige obrigatoriamente Create e Retrieve. A exclusão foi acrescenta
 - Bibliotecas ORMLite JDBC e ORMLite Core;
 - Driver JDBC do SQLite (`sqlite-jdbc`).
 
-Os arquivos `.jar` das bibliotecas não estão incluídos neste projeto. Utilize as mesmas bibliotecas e configurações que já funcionam no seu ambiente BlueJ. Caso abra o projeto em outro computador, será necessário configurar essas dependências novamente.
+Os arquivos `.jar` das bibliotecas não estão incluídos neste projeto. Será necessário configurar essas dependências.
 
 ## Como abrir e executar no BlueJ
 
 1. Extraia a pasta do projeto para um local de sua preferência.
 2. Abra o BlueJ e selecione **Project (Projeto) > Open Project (Abrir projeto)**.
 3. Escolha a pasta extraída que contém o arquivo `package.bluej`.
-4. Confira se as bibliotecas ORMLite e SQLite JDBC estão disponíveis para o projeto e se a configuração JavaFX já utilizada no BlueJ continua ativa.
+4. Confira se as bibliotecas ORMLite e SQLite JDBC estão disponíveis para o projeto e se a configuração JavaFX utilizada no BlueJ está ativa.
 5. Abra `Main.java` e execute o método `main`, ou use a opção de execução da classe `Main` no BlueJ.
 6. A janela do sistema será aberta com o formulário e a tabela de pacientes.
 
-## Como editar a interface no Scene Builder
-
-1. Localize o arquivo `PacienteView.fxml` na pasta do projeto.
-2. Abra o arquivo com o Scene Builder.
-3. É possível alterar textos, cores, tamanhos e disposição dos componentes.
-4. **Preserve os valores `fx:id` e os métodos `onAction` existentes**, pois eles conectam os componentes ao `PacienteController.java`.
-5. Salve o arquivo FXML e execute novamente a classe `Main` no BlueJ.
-
-## Banco de dados e migração
-
-A versão anterior do projeto utilizava a idade como identificador automático e não possuía uma coluna `id` separada. Nesta versão, o identificador é armazenado em `id`, enquanto a idade continua sendo informada manualmente.
-
-Na inicialização, `Database.java` verifica se a tabela antiga ainda não possui a coluna `id`. Quando necessário, a estrutura da tabela é atualizada e os dados existentes são copiados para a nova estrutura. Se a tabela já estiver atualizada, a migração não é repetida.
-
-**Antes da primeira execução, mantenha uma cópia de segurança do arquivo `hospital.db`.** A migração deve ser testada primeiro em uma cópia do banco original.
-
-O arquivo `hospital.db` deve estar no diretório de trabalho utilizado pelo BlueJ ao executar a aplicação. Se o BlueJ iniciar o programa em outro diretório, ajuste o caminho informado em `new Database("hospital.db")` no `PacienteController.java`.
 
 ## Testes recomendados
 
 1. Execute a aplicação e confira se a tabela apresenta os registros existentes.
+   ![Tela principal do sistema](screenshots/tela-principal.png) Foto 1.
+   
 2. Preencha os campos do formulário e cadastre um paciente.
+![Tela principal do sistema](screenshots/paciente-cadastro.png) Foto 2.
+ 
 3. Confira se o paciente aparece na tabela com um identificador gerado automaticamente.
 4. Feche e abra a aplicação novamente e verifique se o registro continua na tabela.
 5. Experimente deixar um campo obrigatório vazio e informar uma idade inválida para conferir as mensagens de validação.
+![Tela principal do sistema](screenshots/paciente-cadastro2.png) Foto 3.
 
-## Capturas de tela para a entrega
+6. Exclua os dados fornercidos anteriormente.
+![Tela principal do sistema](screenshots/exclusao-paciente.png) Foto 4.
+![Tela principal do sistema](screenshots/exclusao-paciente2.png) Foto 5.
 
-Adicione à pasta `screenshots/` capturas reais da aplicação executada no BlueJ. Sugestões:
-
-- `screenshots/tela-principal.png`: formulário e tabela;
-- `screenshots/paciente-cadastrado.png`: tabela após realizar um cadastro;
-- `screenshots/exclusao-paciente.png`: tabela após excluir um paciente.
-
-Para inserir uma captura neste documento, utilize, por exemplo:
-
-```markdown
-![Tela principal do sistema](screenshots/tela-principal.png)
-```
 
 ## Autoria
 
