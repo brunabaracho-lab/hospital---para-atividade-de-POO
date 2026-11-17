@@ -63,18 +63,23 @@ Os arquivos `.jar` das bibliotecas não estão incluídos neste projeto. Será n
 ## Testes recomendados
 
 1. Execute a aplicação e confira se a tabela apresenta os registros existentes.
+
    ![Tela principal do sistema](screenshots/tela-principal.png) Foto 1.
    
 2. Preencha os campos do formulário e cadastre um paciente.
+
 ![Tela principal do sistema](screenshots/paciente-cadastro.png) Foto 2.
  
 3. Confira se o paciente aparece na tabela com um identificador gerado automaticamente.
 4. Feche e abra a aplicação novamente e verifique se o registro continua na tabela.
 5. Experimente deixar um campo obrigatório vazio e informar uma idade inválida para conferir as mensagens de validação.
+
 ![Tela principal do sistema](screenshots/paciente-cadastro2.png) Foto 3.
 
-6. Exclua os dados fornercidos anteriormente.
+5. Exclua os dados fornercidos anteriormente.
+
 ![Tela principal do sistema](screenshots/exclusao-paciente.png) Foto 4.
+
 ![Tela principal do sistema](screenshots/exclusao-paciente2.png) Foto 5.
 
 
